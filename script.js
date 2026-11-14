@@ -1,7 +1,6 @@
 (() => {
   'use strict';
 
-  // Character Sets
   const CHAR_SETS = {
     uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     lowercase: 'abcdefghijklmnopqrstuvwxyz',
@@ -9,7 +8,6 @@
     symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
   };
 
-  // DOM Elements
   const elements = {
     passwordOutput: document.getElementById('passwordOutput'),
     copyBtn: document.getElementById('copyBtn'),
@@ -37,10 +35,6 @@
 
   let toastTimeout;
 
-  /**
-   * Generates a cryptographically secure random integer in [0, max).
-   * Uses rejection sampling to eliminate modulo bias.
-   */
   function getSecureRandomInt(max) {
     const randomBuffer = new Uint32Array(1);
     const limit = Math.floor(0xffffffff / max) * max;
@@ -54,9 +48,6 @@
     return randomValue % max;
   }
 
-  /**
-   * Fisher-Yates shuffle using Web Crypto API.
-   */
   function secureShuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = getSecureRandomInt(i + 1);
@@ -65,9 +56,6 @@
     return array;
   }
 
-  /**
-   * Returns active character pools based on user checkboxes.
-   */
   function getSelectedPools() {
     const pools = [];
     if (elements.includeUppercase.checked) pools.push(CHAR_SETS.uppercase);
@@ -77,14 +65,10 @@
     return pools;
   }
 
-  /**
-   * Generates a password guaranteeing at least one character from each selected pool.
-   */
   function generatePassword() {
     const length = parseInt(elements.lengthSlider.value, 10);
     const pools = getSelectedPools();
 
-    // Enforce at least one active character set
     if (pools.length === 0) {
       elements.includeLowercase.checked = true;
       pools.push(CHAR_SETS.lowercase);
@@ -94,12 +78,10 @@
     const combinedPool = pools.join('');
     const passwordChars = [];
 
-    // Guarantee one character from every selected set
     pools.forEach((pool) => {
       passwordChars.push(pool[getSecureRandomInt(pool.length)]);
     });
 
-    // Fill remaining length from combined pool
     for (let i = passwordChars.length; i < length; i++) {
       passwordChars.push(combinedPool[getSecureRandomInt(combinedPool.length)]);
     }
@@ -109,9 +91,6 @@
     updateStrengthMeter(finalPassword, pools);
   }
 
-  /**
-   * Calculates password entropy in bits and updates UI strength meter.
-   */
   function updateStrengthMeter(password, pools) {
     const poolSize = pools.reduce((acc, set) => acc + set.length, 0);
     const entropy = password.length * Math.log2(poolSize || 1);
@@ -141,9 +120,6 @@
     elements.strengthBarContainer.setAttribute('aria-valuenow', percentage);
   }
 
-  /**
-   * Copies generated password to clipboard with fallback support.
-   */
   async function copyPassword() {
     const password = elements.passwordOutput.value;
     if (!password) return;
@@ -165,9 +141,6 @@
     }, 1800);
   }
 
-  /**
-   * Displays a non-intrusive bottom toast notification.
-   */
   function showToast(message) {
     clearTimeout(toastTimeout);
     elements.toast.textContent = message;
@@ -178,9 +151,6 @@
     }, 2400);
   }
 
-  /**
-   * Updates slider track fill progress visually.
-   */
   function updateSliderBackground() {
     const min = parseInt(elements.lengthSlider.min, 10);
     const max = parseInt(elements.lengthSlider.max, 10);
@@ -191,9 +161,6 @@
     elements.lengthValue.textContent = val;
   }
 
-  /**
-   * Modal Content Definitions for Navigation Links & Login
-   */
   const MODAL_CONTENT = {
     featuresModal: {
       title: 'Key Features',
@@ -226,7 +193,6 @@
     elements.infoModal.showModal();
   }
 
-  // Event Listeners
   function bindEvents() {
     elements.generateBtn.addEventListener('click', generatePassword);
     elements.refreshBtn.addEventListener('click', generatePassword);
@@ -246,13 +212,11 @@
       checkbox.addEventListener('change', generatePassword);
     });
 
-    // Mobile Hamburger Toggle
     elements.navToggle.addEventListener('click', () => {
       const isOpen = elements.navMenu.classList.toggle('is-open');
       elements.navToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // Navigation Modal Triggers
     document.querySelectorAll('[data-modal-trigger]').forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -266,7 +230,6 @@
       });
     });
 
-    // Login Button Modal
     elements.loginBtn.addEventListener('click', () => {
       openModal(
         'Log In to PassGen Vault',
@@ -284,14 +247,12 @@
       });
     });
 
-    // Close Modal
     elements.closeModalBtn.addEventListener('click', () => elements.infoModal.close());
     elements.infoModal.addEventListener('click', (e) => {
       if (e.target === elements.infoModal) elements.infoModal.close();
     });
   }
 
-  // Initialize Application
   function init() {
     updateSliderBackground();
     generatePassword();
