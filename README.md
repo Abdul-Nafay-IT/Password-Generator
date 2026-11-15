@@ -104,7 +104,7 @@ You can change the length or character settings at any time to generate a differ
 ## Project Structure
 
 ```
-PassGen/
+Password Generator/
 │
 ├── index.html
 ├── style.css
