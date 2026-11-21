@@ -209,7 +209,7 @@ Some improvements I would like to explore in future versions include:
 
 ## Live Demo
 
-[Visit PassGen](https://passwrod-gen.netlify.app/)
+[Visit PassGen](https://passw-generator97.netlify.app/)
 
 ## Author
 
