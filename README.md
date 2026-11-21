@@ -35,15 +35,15 @@ The application is designed to work across desktop, tablet, and mobile screens.
 
 ### Desktop Preview
 
-![Desktop Preview](https://raw.githubusercontent.com/Abdul-Nafay-IT/Password-Generator/viusal/screenshots/desktop-preview.png)
+![Desktop Preview](screenshots/desktop-preview.png)
 
 ### Mobile Preview
 
-![Mobile Preview](https://raw.githubusercontent.com/Abdul-Nafay-IT/password-generator/viusal/screenshots/mobile-preview.png)
+![Mobile Preview](screenshots/mobile-preview.png)
 
 ### Password Generation Demo
 
-![Password Generation Demo](https://raw.githubusercontent.com/Abdul-Nafay-IT/password-generator/viusal/screenshots/passgen-demo.gif)
+![Password Generation Demo](screenshots/passgen-demo.gif)
 ## Features
 
 - **Random Password Generation:** Generate new passwords instantly.
